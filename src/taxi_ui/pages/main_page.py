@@ -1,18 +1,20 @@
 from .base_page import BasePage
 from src.taxi_ui.locators.main_page_locators import MainPageLocators as L
+import re
 
 class MainPage(BasePage):
 
     def set_from_address(self, address):
         self.type(L.FROM_INPUT, address)
+        return self
 
     def set_to_address(self, address):
         self.type(L.TO_INPUT, address)
+        return self
 
     def build_route(self, from_addr, to_addr):
         self.set_from_address(from_addr)
         self.set_to_address(to_addr)
-        # если маршрут строится автоматически – просто ждём панель маршрута
         self.wait_for_route_panel()
 
     def wait_for_route_panel(self):
@@ -26,17 +28,32 @@ class MainPage(BasePage):
 
     def select_custom_route(self):
         self.click(L.TAB_CUSTOM)
+    def is_call_taxi_button_active(self) -> bool:
+        return self.is_clickable(L.CALL_TAXI_BUTTON)
 
-    def is_call_taxi_button_enabled(self):
-        return self.find(L.CALL_TAXI_BUTTON).is_enabled()
+    def is_book_drive_button_active(self) -> bool:
+        return self.is_clickable(L.BOOK_DRIVE_BUTTON)
 
-    def is_book_drive_button_enabled(self):
-        return self.find(L.BOOK_DRIVE_BUTTON).is_enabled()
+    def _is_tab_active(self, tab_locator) -> bool:
+        el = self.find(tab_locator)
+        classes = el.get_attribute("class").split()
+        return "active" in classes
 
-    def get_route_price_and_time(self):
-        # верни текст/числа из блока Стоимость / Время
-        ...
+    def is_optimal_tab_active(self) -> bool:
+        return self._is_tab_active(L.TAB_OPTIMAL)
 
-    def get_map_points(self):
-        # верни булевые флаги или список найденных точек
-        ...
+    def is_fast_tab_active(self) -> bool:
+        return self._is_tab_active(L.TAB_FAST)
+
+    def is_custom_tab_active(self) -> bool:
+        return self._is_tab_active(L.TAB_CUSTOM)
+
+    def get_route_price(self) -> int:
+        text = self.find(L.ROUTE_PRICE_TEXT).text
+        digits = re.findall(r"\d+", text)
+        return int(digits[0])
+
+    def get_route_time(self) -> int:
+        text = self.find(L.ROUTE_DURATION_TEXT).text
+        digits = re.findall(r"\d+", text)
+        return int(digits[0])

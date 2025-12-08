@@ -1,16 +1,20 @@
 from selenium.webdriver.common.by import By
 class MainPageLocators:
-    FROM_INPUT = (By.CSS_SELECTOR, "input[placeholder='Откуда']")
-    TO_INPUT = (By.CSS_SELECTOR, "input[placeholder='Куда']")
-    # Таб «Оптимальный», «Быстрый», «Свой»
-    TAB_OPTIMAL = (...)
-    TAB_FAST = (...)
-    TAB_CUSTOM = (...)
+    FROM_INPUT = (By.XPATH, "//input[@id = 'from']")
+    TO_INPUT = (By.XPATH, "//input[@id = 'to']")
     # Блок выбора маршрута
-    ROUTE_PANEL = (...)
+    ROUTE_PANEL = (By.XPATH, "//div[contains(@class, 'type-picker shown')]")
+    ROUTE_RESULTS_CONTAINER = (By.XPATH, "//div[@class = 'results-container']")
+    ROUTE_PRICE_TEXT = (By.CSS_SELECTOR, ".results-container .text")
+    ROUTE_DURATION_TEXT = (By.CSS_SELECTOR, ".results-container .duration")
+    # Табы «Оптимальный», «Быстрый», «Свой»
+    TAB_OPTIMAL = (By.XPATH, "//div[@class='modes-container']/div[.='Оптимальный']")
+    TAB_FAST =  (By.XPATH, "//div[@class='modes-container']/div[.='Быстрый']")
+    TAB_CUSTOM = (By.XPATH, "//div[@class='modes-container']/div[.='Свой']")
+    DRIVE_BUTTON = (By.XPATH, "//div[contains(@class, 'type drive')]")
     # Кнопки Вызвать такси / Забронировать
-    CALL_TAXI_BUTTON = (...)
-    BOOK_DRIVE_BUTTON = (...)
+    CALL_TAXI_BUTTON = (By.XPATH, "//button[contains(@type, 'button') and text() = 'Вызвать такси']")
+    BOOK_DRIVE_BUTTON = (By.XPATH, "//button[contains(@class, 'smart-button')]")
     # Маркеры на карте (иконки начала/конца маршрута)
-    MAP_START_POINT = (...)
-    MAP_FINISH_POINT = (...)
+    MAP_START_POINT = (By.XPATH, "//ymaps[contains(@class,'route-pin')][.//ymaps[contains(@class,'PointSmallLetter0')]]")
+    MAP_FINISH_POINT = (By.XPATH, "//ymaps[contains(@class,'route-pin')][.//ymaps[contains(@class,'PointSmallLetter1')]]")

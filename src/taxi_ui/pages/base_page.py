@@ -27,6 +27,14 @@ class BasePage:
     def scroll_into_view(self, element):
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
 
+    @allure.step('Ожидаем возможности клика по элементу')
+    def is_clickable(self, locator) -> bool:
+        try:
+            self.wait.until(EC.element_to_be_clickable(locator))
+            return True
+        except TimeoutException:
+            return False
+
     @allure.step('Нажимаем на элемент')
     def click(self, locator):
         self.wait.until(EC.element_to_be_clickable(locator)).click()
