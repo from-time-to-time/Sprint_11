@@ -29,6 +29,10 @@ class TaxiOrderLocators:
         "Утешительный": (By.XPATH, "//div[contains(@class,'__react_component_tooltip') and @data-id='tooltip' and @id='tariff-card-4']"),
         "Глянцевый": (By.XPATH, "//div[contains(@class,'__react_component_tooltip') and @data-id='tooltip' and @id='tariff-card-5']")
     }
+    #Цены тарифов
+    TARIFF_PRICE = {
+        "Рабочий": (By.XPATH, "//div[.='Рабочий']/following-sibling::div[contains(@class,'price')]"),
+    }
     #Блок под тарифами
     PHONE = (By.XPATH, "//div[@class = 'np-button']")
     PAYMENT_METHOD = (By.XPATH, "//div[@class = 'form']/div[contains(@class, 'pp-button')]")

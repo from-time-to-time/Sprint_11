@@ -1,7 +1,6 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-from src.taxi_ui.locators.main_page_locators import MainPageLocators as M
 from selenium.webdriver.common.action_chains import ActionChains
 from src.taxi_ui import config
 import allure
@@ -49,3 +48,7 @@ class BasePage:
     def hover(self, locator):
         element = self.find(locator)
         ActionChains(self.driver).move_to_element(element).perform()
+
+    @allure.step('Проверяем, что элемент скрылся')
+    def is_disappeared(self, locator):
+        return self.wait.until(EC.invisibility_of_element_located(locator))

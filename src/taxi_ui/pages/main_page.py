@@ -2,6 +2,7 @@ from .base_page import BasePage
 from src.taxi_ui.locators.main_page_locators import MainPageLocators as L
 import re
 
+
 class MainPage(BasePage):
 
     def set_from_address(self, address):
@@ -12,13 +13,21 @@ class MainPage(BasePage):
         self.type(L.TO_INPUT, address)
         return self
 
-    def build_route(self, from_addr, to_addr):
-        self.set_from_address(from_addr)
-        self.set_to_address(to_addr)
-        self.wait_for_route_panel()
+    def wait_for_start_point(self):
+        self.wait_visible(L.MAP_START_POINT)
+        return self
+
+    def wait_for_finish_point(self):
+        self.wait_visible(L.MAP_FINISH_POINT)
+        return self
 
     def wait_for_route_panel(self):
-        self.find(L.ROUTE_PANEL)
+        self.wait_visible(L.ROUTE_PANEL)
+        return self
+    def get_same_route_text(self) -> str:
+        part1 = self.wait_visible(L.ROUTE_PRICE_TEXT).text
+        part2 = self.wait_visible(L.ROUTE_DURATION_TEXT).text
+        return f"{part1} {part2}"
 
     def select_optimal_route(self):
         self.click(L.TAB_OPTIMAL)

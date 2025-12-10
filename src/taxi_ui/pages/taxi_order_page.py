@@ -1,5 +1,6 @@
 from .base_page import BasePage
 from src.taxi_ui.locators.taxi_order_locators import TaxiOrderLocators as L
+import re
 
 class TaxiOrderPage(BasePage):
 
@@ -18,6 +19,12 @@ class TaxiOrderPage(BasePage):
         locator = L.TARIFF_TOOLTIP[name]
         return self.find(locator).text
 
+    def get_tariff_price(self, name: str) -> int:
+        locator = L.TARIFF_PRICE[name]
+        text = self.find(locator).text
+        digits = re.findall(r"\d+", text)
+        return int(digits[0])
+
     def open_requirements(self):
         self.click(L.REQUIREMENTS_DROPDOWN)
 
@@ -31,3 +38,5 @@ class TaxiOrderPage(BasePage):
 
     def click_submit(self):
         self.click(L.ORDER_BUTTON)
+        from src.taxi_ui.pages.taxi_modal import SearchTaxiModal
+        return SearchTaxiModal(self.driver)
