@@ -17,7 +17,8 @@ def main_page(driver):
     page.open(config.BASE_URL)
     return page
 @pytest.fixture
-def taxi_order_page(main_page):
-    main_page.build_route(FROM_ADDRESS, TO_ADDRESS)
-    main_page.select_fast_route()
-    return main_page.click_call_taxi()
+def route_set(main_page):
+    main_page.set_from_address(FROM_ADDRESS)
+    main_page.set_to_address(TO_ADDRESS)
+    main_page.wait_for_route_panel()
+    return main_page

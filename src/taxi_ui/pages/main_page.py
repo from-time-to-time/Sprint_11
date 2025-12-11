@@ -41,7 +41,9 @@ class MainPage(BasePage):
         return self.is_clickable(L.CALL_TAXI_BUTTON)
 
     def is_book_drive_button_active(self) -> bool:
-        return self.is_clickable(L.BOOK_DRIVE_BUTTON)
+        btn = self.wait_visible(L.BOOK_DRIVE_BUTTON)
+        classes = btn.get_attribute("class").split()
+        return "disabled" not in classes
 
     def _is_tab_active(self, tab_locator) -> bool:
         el = self.find(tab_locator)
@@ -56,6 +58,29 @@ class MainPage(BasePage):
 
     def is_custom_tab_active(self) -> bool:
         return self._is_tab_active(L.TAB_CUSTOM)
+
+    def select_drive(self):
+        self.click(L.DRIVE_TYPE)
+
+    def wait_types(self):
+        self.wait_visible(L.TYPES_CONTAINER)
+        return self
+
+    def _is_transport_type_enabled(self, locator) -> bool:
+        el = self.find(locator)
+        classes = el.get_attribute("class").split()
+        return "disabled" not in classes
+
+    def are_all_transport_types_enabled(self) -> bool:
+        locators = [
+            L.CAR_TYPE,
+            L.WALK_TYPE,
+            L.TAXI_TYPE,
+            L.BIKE_TYPE,
+            L.SCOOTER_TYPE,
+            L.DRIVE_TYPE,
+        ]
+        return all(self._is_transport_type_enabled(l) for l in locators)
 
     def get_route_price(self) -> int:
         text = self.find(L.ROUTE_PRICE_TEXT).text

@@ -41,13 +41,5 @@ class TaxiOrderLocators:
     REQUIREMENTS_DROPDOWN = (By.CSS_SELECTOR, 'div[class=reqs-body]')
     LAPTOP_TABLE_CHECKBOX = (By.XPATH, "//div[contains(@class,'r-sw-label') and text()='Столик для ноутбука']/following::input[@type='checkbox' and contains(@class,'switch-input')][1]")
     ORDER_BUTTON = (By.CSS_SELECTOR, 'button[class=smart-button]')
-    #Типы передвижения
-    TYPES_CONTAINER = (By.CSS_SELECTOR, ".types-container")
-    CAR_TYPE = (By.XPATH, "//div[@class='types-container']//div[contains(@class,'type')][.//img[contains(@src,'car')]]")
-    WALK_TYPE = (By.XPATH, "//div[@class='types-container']//div[contains(@class,'type')][.//img[contains(@src,'walk')]]")
-    TAXI_TYPE = (By.XPATH, "//div[@class='types-container']//div[contains(@class,'type')][.//img[contains(@src,'taxi')]]")
-    BIKE_TYPE = (By.XPATH, "//div[@class='types-container']//div[contains(@class,'type')][.//img[contains(@src,'bike')]]")
-    SCOOTER_TYPE = (By.XPATH, "//div[@class='types-container']//div[contains(@class,'type')][.//img[contains(@src,'scooter')]]")
-    DRIVE_TYPE = (By.XPATH, "//div[@class='types-container']//div[contains(@class,'type')][.//img[contains(@src,'drive')]]")
 
 
