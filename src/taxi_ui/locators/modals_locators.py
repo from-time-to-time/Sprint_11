@@ -6,7 +6,7 @@ class ModalsLocators:
     CANCEL_BUTTON = (By.XPATH, "//div[text()='Отменить']/preceding-sibling::button")
     DETAILS_BUTTON = (By.XPATH, "//div[text()='Детали']/preceding-sibling::button")
 
-    CAR_NUMBER = (By.CSS_SELECTOR, 'div[class=number]')
+    CAR_NUMBER = (By.CSS_SELECTOR, 'div.order-number')
     CAR_IMAGE = (By.CSS_SELECTOR, 'img[alt=Car]')
     DRIVER_INFO = (By.XPATH, "//div[@class='order-btn-group' and .//div[@class='order-btn-rating']]")
     DRIVER_PHOTO = (By.XPATH, "//div[@class='order-btn-group' and .//div[@class='order-btn-rating']]//img")

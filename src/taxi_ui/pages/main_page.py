@@ -91,3 +91,8 @@ class MainPage(BasePage):
         text = self.find(L.ROUTE_DURATION_TEXT).text
         digits = re.findall(r"\d+", text)
         return int(digits[0])
+
+    def click_call_taxi(self):
+        self.click(L.CALL_TAXI_BUTTON)
+        from src.taxi_ui.pages.taxi_order_page import TaxiOrderPage
+        return TaxiOrderPage(self.driver)

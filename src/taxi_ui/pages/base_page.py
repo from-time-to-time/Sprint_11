@@ -22,6 +22,13 @@ class BasePage:
     def wait_visible(self, locator):
         return self.wait.until(EC.visibility_of_element_located(locator))
 
+    def _is_visible(self, locator) -> bool:
+        try:
+            self.wait_visible(locator)
+            return True
+        except TimeoutException:
+            return False
+
     @allure.step('Скроллим страницу к элементу')
     def scroll_into_view(self, element):
         self.driver.execute_script("arguments[0].scrollIntoView();", element)

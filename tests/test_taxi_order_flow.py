@@ -1,5 +1,6 @@
 import allure
-
+import pytest
+from src.taxi_ui.data.taxi_tariffs import TAXI_TARIFFS, TARIFF_DESCRIPTIONS
 class TestTaxiOrder:
     @allure.title('Проверка смены времени и стоимости маршрута при переключении между табами "Оптимальный" и "Быстрый"')
     def test_optimal_fast_switch_updates_active_tab_and_price_time(self, route_set):
@@ -44,13 +45,41 @@ class TestTaxiOrder:
         main_page.select_drive()
         assert main_page.is_book_drive_button_active(), 'Кнопка "Забронировать" не активна'
 
-    # @pytest.mark.xfail(reason="BUG: 'Отменить' не закрывает окно заказа")
-    # def test_order_cancel_closes_order_modal(taxi_order_page):
-    #     # полный флоу до завершённого заказа
-    #     taxi_order_page.select_tariff("Рабочий")
-    #     taxi_order_page.enable_laptop_table()
-    #     search_modal = taxi_order_page.click_submit().wait_visible()
-    #     order_modal = search_modal.wait_until_order_completed().wait_visible()
-    #
-    #     order_modal.click_cancel()
-    #     assert order_modal.is_closed()
+    @allure.title('Проверка заказа тарифа "Такси"')
+    def test_taxi_order(self, route_set):
+        main_page = route_set
+
+        taxi_order = main_page.click_call_taxi()
+        taxi_order.wait_tariffs()
+
+        assert taxi_order.has_all_taxi_tariffs(), 'Отображаются не все 6 тарифов такси'
+
+        active = taxi_order.get_active_tariff_names()
+        assert active == [TAXI_TARIFFS[0]]
+
+    @allure.title('Проверка описаний тарифов такси')
+    @pytest.mark.xfail(reason="BUG: Некорректные описания тарифов 'Разговорчивый' и 'Сонный '")
+    @pytest.mark.parametrize("tariff_name", TAXI_TARIFFS)
+    def test_taxi_tariff_tooltips_show_correct_description(self, route_set, tariff_name):
+        main_page = route_set
+
+        taxi_order = main_page.click_call_taxi()
+        taxi_order.wait_tariffs()
+
+        actual_description = taxi_order.get_tariff_description(tariff_name)
+
+        expected_description = TARIFF_DESCRIPTIONS[tariff_name]
+
+        assert actual_description == expected_description
+
+    @allure.title('Проверка отображения блока с полями под тарифами')
+    def test_taxi_order_form_fields_visible(self, route_set):
+        main_page = route_set
+
+        taxi_order = main_page.click_call_taxi()
+        taxi_order.wait_tariffs()
+
+        assert taxi_order.is_phone_field_visible(), 'Поле "Телефон" не отображается'
+        assert taxi_order.is_payment_method_visible(), 'Поле "Способ оплаты" не отображается'
+        assert taxi_order.is_comment_field_visible(), 'Поле "Комментарий водителю" не отображается'
+        assert taxi_order.is_requirements_block_visible(), 'Блок "Требования к заказу" не отображается'
