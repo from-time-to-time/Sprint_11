@@ -1,5 +1,7 @@
 import allure
+
 from src.taxi_ui.data import addresses, texts
+
 
 class TestRoute:
     @allure.title('Проверка отображения точек начала и конца маршрута на карте')

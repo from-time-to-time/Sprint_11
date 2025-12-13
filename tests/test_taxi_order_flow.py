@@ -1,6 +1,9 @@
 import allure
 import pytest
+
 from src.taxi_ui.data.taxi_tariffs import TAXI_TARIFFS, TARIFF_DESCRIPTIONS
+
+
 class TestTaxiOrder:
     @allure.title('Проверка смены времени и стоимости маршрута при переключении между табами "Оптимальный" и "Быстрый"')
     def test_optimal_fast_switch_updates_active_tab_and_price_time(self, route_set):
@@ -58,8 +61,9 @@ class TestTaxiOrder:
         assert active == [TAXI_TARIFFS[0]]
 
     @allure.title('Проверка описаний тарифов такси')
-    @pytest.mark.xfail(reason="BUG: Некорректные описания тарифов 'Разговорчивый' и 'Сонный '")
-    @pytest.mark.parametrize("tariff_name", TAXI_TARIFFS)
+    @pytest.mark.xfail(reason='BUG: Некорректные описания тарифов "Разговорчивый" и "Сонный "')
+    @pytest.mark.parametrize("tariff_name", TAXI_TARIFFS,
+                             ids=["work", "sleep", "vacation", "talkative", "comforting", "glossy"])
     def test_taxi_tariff_tooltips_show_correct_description(self, route_set, tariff_name):
         main_page = route_set
 
