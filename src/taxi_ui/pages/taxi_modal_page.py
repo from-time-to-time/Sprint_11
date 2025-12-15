@@ -18,7 +18,6 @@ class TaxiModal(BasePage):
     @allure.step('Дождаться отображения элементов модального окна с назначенным такси')
     def wait_for_order_assigned(self):
         self.wait_visible_with_timeout(M.CAR_NUMBER, timeout=60)
-        return self
 
     @allure.step('Проверить, что модальное окно назначенного такси содержит все элементы по ТЗ')
     def has_assigned_modal_elements(self) -> bool:
@@ -37,11 +36,9 @@ class TaxiModal(BasePage):
                 and self._is_visible(M.DETAILS_BUTTON)
         )
 
-    @allure.step('Нажать на кнопку "Детали" и открыть модальное окно деталей поездки')
+    @allure.step('Нажать на кнопку "Детали"')
     def click_details(self):
         self.click(M.DETAILS_BUTTON)
-        from src.taxi_ui.pages.ride_details_modal_page import RideDetailsModal
-        return RideDetailsModal(self.driver)
 
     @allure.step('Нажать на кнопку "Отменить"')
     def click_cancel(self):

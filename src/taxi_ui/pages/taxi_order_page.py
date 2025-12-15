@@ -35,13 +35,11 @@ class TaxiOrderPage(BasePage):
     def select_tariff(self, name: str):
         locator = L.TARIFF_CARD[name]
         self.click(locator)
-        return self
 
     @allure.step('Навести курсор на иконку информации о тарифе')
     def hover_tariff_info_icon(self, name: str):
         locator = L.TARIFF_INFO_ICON[name]
         self.hover(locator)
-        return self
 
     @allure.step('Получить описание тарифа такси (подзаголовок)')
     def get_tariff_description(self, name: str) -> str:
@@ -74,11 +72,9 @@ class TaxiOrderPage(BasePage):
         if not checkbox.is_selected():
             checkbox.click()
 
-    @allure.step('Нажать кнопку "Ввести номер и заказать" и открыть модальное окно поиска машины')
+    @allure.step('Нажать кнопку "Ввести номер и заказать"')
     def click_submit(self):
         self.click(L.ORDER_BUTTON)
-        from src.taxi_ui.pages.taxi_modal_page import TaxiModal
-        return TaxiModal(self.driver)
 
     @allure.step('Проверить наличие поля "Телефон" в форме заказа')
     def is_phone_field_visible(self) -> bool:

@@ -11,12 +11,10 @@ class MainPage(BasePage):
     @allure.step('Задать адрес "Откуда"')
     def set_from_address(self, address):
         self.type(L.FROM_INPUT, address)
-        return self
 
     @allure.step('Задать адрес "Куда"')
     def set_to_address(self, address):
         self.type(L.TO_INPUT, address)
-        return self
 
     @allure.step('Дождаться отображения точки стартого адреса на карте')
     def wait_for_start_point(self):
@@ -86,7 +84,6 @@ class MainPage(BasePage):
     @allure.step('Дождаться появления блока типов передвижения')
     def wait_types(self):
         self.wait_visible(L.TYPES_CONTAINER)
-        return self
 
     @allure.step('Проверить, что тип передвижения активен')
     def _is_transport_type_enabled(self, locator) -> bool:
@@ -118,8 +115,6 @@ class MainPage(BasePage):
         digits = re.findall(r"\d+", text)
         return int(digits[0])
 
-    @allure.step('Нажать кнопку "Вызвать такси" и открыть форму заказа')
+    @allure.step('Нажать кнопку "Вызвать такси"')
     def click_call_taxi(self):
         self.click(L.CALL_TAXI_BUTTON)
-        from src.taxi_ui.pages.taxi_order_page import TaxiOrderPage
-        return TaxiOrderPage(self.driver)
